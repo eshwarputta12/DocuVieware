@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Client\DocuVieware.Client.csproj" />
+    <ProjectReference Include="..\Shared\DocuVieware.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GdPicture.NET.14.WEB.DocuVieware.Core">
+      <HintPath>E:\GdPicture.NET 14\Redist\DocuVieware (.NET Core 3.1)\GdPicture.NET.14.WEB.DocuVieware.Core.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+</Project>

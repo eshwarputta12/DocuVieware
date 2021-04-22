@@ -1,0 +1,44 @@
+﻿@page "/"
+@inject HttpClient Client
+@inject IJSRuntime Runtime
+@inject SessionService Service
+
+@using DocuVieware.Shared
+@using System.Net.Http;
+@using DocuVieware.Client.Shared;
+
+<div @ref="docuDiv" style="width:1200px;height:1000px;"></div>
+
+@code {
+    ElementReference docuDiv;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var docuViewareConfig = new DocuViewarConfiguration
+        {
+            SessionId = Service.SessionId,
+            ControlId = $"DocuVieware{Service.Key}",
+            AllowPrint = true,
+            EnablePrintButton = true,
+            AllowUpload = true,
+            EnableFileUploadButton = true,
+            CollapsedSnapIn = true,
+            ShowAnnotationsSnapIn = true,
+            EnableRotateButtons = true,
+            EnableZoomButtons = true,
+            EnablePageViewButtons = true,
+            EnableMultipleThumbnailSelection = true,
+            EnableMouseModeButtons = true,
+            EnableFormFieldsEdition = true,
+            EnableTwainAcquisitionButton = true
+        };
+        var response = await Client.PostAsJsonAsync("api/DocuViewareREST/GetDocuViewareControl", docuViewareConfig);
+        var responseContent = await response.Content.ReadFromJsonAsync<DocuViewareRESTOutputResponse>();
+        await Runtime.InvokeVoidAsync("docuViewareShim.loadControl",
+            new[]
+            {
+                    (object)docuDiv, (object)responseContent.HtmlContent
+                        });
+    }
+}
+<img src="~/test.jpg" />
